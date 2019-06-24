@@ -5,6 +5,12 @@ var islogin = false;
 var online_books = []
 
 $(window).ready(function() {
+	
+	var a = isMobile();
+	if(a==true){
+		window.location.href = "./index_m.jsp"
+	}
+	
 	$("#all_local").click(function(){
 		if(this.checked){
 			$("input[name='local_list']").prop("checked", true);
@@ -21,7 +27,34 @@ $(window).ready(function() {
 		}
 	})
 	
+	
+	
 })
+
+function isMobile() {
+	var userAgentInfo = navigator.userAgent;
+
+	var mobileAgents = [ "Android", "iPhone", "SymbianOS", "Windows Phone", "iPad","iPod"];
+
+	var mobile_flag = false;
+
+	//根据userAgent判断是否是手机
+	for (var v = 0; v < mobileAgents.length; v++) {
+		if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+			mobile_flag = true;
+			break;
+		}
+	}
+	 var screen_width = window.screen.width;
+	 var screen_height = window.screen.height;   
+
+	 //根据屏幕分辨率判断是否是手机
+	 if(screen_width < 500 && screen_height < 800){
+		 mobile_flag = true;
+	 }
+
+	 return mobile_flag;
+}
 
 function online_reg_btn(){
 	$("#online_login").hide()
@@ -224,7 +257,7 @@ function delete_all_book() {
 //从本地存储中获取所有备忘录
 function get_my_book() {
 	var mylist = []
-	allbook = localStorage.valueOf();
+	var allbook = localStorage.valueOf();
 	for (var i = 0; i < allbook.length; i++) {
 		mylist[i] = (JSON.parse(localStorage.getItem(localStorage.key(i))))
 	}
