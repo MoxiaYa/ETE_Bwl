@@ -7,4 +7,5 @@ import com.pojo.Account;
 @Repository
 public interface UserMapper {
 	public Account getAccount(String id,String pwd);
+	public int addAccount(Account account);
 }

@@ -2,7 +2,7 @@ var height = $(window).height()
 var width = $(window).width()
 var bili = width / height
 var islogin = false;
-
+var online_books = []
 
 $(window).ready(function() {
 	$("#all_local").click(function(){
@@ -23,9 +23,51 @@ $(window).ready(function() {
 	
 })
 
+function online_reg_btn(){
+	$("#online_login").hide()
+	$("#online_reg").show()
+}
 
+function to_login(){
+	$("#online_reg").hide()
+	$("#online_login").show()
+}
 
-var online_books = []
+function online_reg_ok(){
+	var id = $("#reg_user").val()
+	var pwd = $("#reg_pwd").val()
+	var repwd = $("#reg_repwd").val()
+	var errorinfo = "";
+	if(id==null||id==""){
+		errorinfo += "请输入账号！\n"
+	}
+	if(pwd==null||pwd==""){
+		errorinfo += "请输入密码！\n"
+	}
+	if(repwd==null||repwd==""){
+		errorinfo += "请确认密码！\n"
+	}else if(repwd!=pwd){
+		errorinfo += "两次密码输入不一致！\n"
+	}
+	
+	if(errorinfo!=""){
+		alert(errorinfo)
+	}else{
+		$.post("bwl/addAccount.do",{"id":id,"pwd":pwd},function(data,status){
+			if(status=="success"){
+				if(data=="true"){
+					alert("注册成功！")
+					to_login();
+				}else{
+					alert("注册失败！账号已存在！")
+				}
+			}else{
+				alert("注册失败！服务器异常")
+			}
+		})
+	}
+	
+}
 
 function online_logout(){
 	var a = confirm("您确认要退出吗");
@@ -347,6 +389,7 @@ function online_add_ok(){
 		if(status=="success"){
 			if(data=="true"){
 				alert("添加成功")
+				update_online()
 				online_add_btn('cancel')
 			}else if(data=="nologin"){
 				alert("添加失败！您的登录已过期，请重新登录！")

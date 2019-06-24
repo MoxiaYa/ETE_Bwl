@@ -13,4 +13,5 @@ public interface UserService {
 	public boolean updateBwl(Bwl bwl);
 	public boolean addBwl(Bwl bwl);
 	public void deleteBwls(List<String> bwList);
+	public boolean addAccount(Account account);
 }

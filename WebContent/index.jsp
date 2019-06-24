@@ -108,10 +108,34 @@ if(account!=null){
 						<button style="margin-right: 10px;" class="btn btn-default" onclick="online_login()">登录</button>
 						<button style="margin-left: 10px;" class="btn btn-default" onclick="to_main('online_login')">返回</button>
 						<div style="margin-top: 10px;">
-							<button class="btn btn-default">没有账号？注册一个</button>
+							<button class="btn btn-default" onclick="online_reg_btn()">没有账号？注册一个</button>
 						</div>
 					</div>
 
+				</div>
+			</div>
+			
+			<div id="online_reg" style="display: none;">
+				<div style="margin-top: 10%;" onkeydown="keytologin()">
+					<div style="margin-top: 5%;">
+						<label>账号</label>
+						<input type="text" id="reg_user" autofocus="autofocus" />
+					</div>
+					<div style="margin-top: 5%;">
+						<label>密码</label>
+						<input type="password" id="reg_pwd" />
+					</div>
+					
+					<div  style="margin-top: 5%;">
+						<label>确认密码</label>
+						<input type="password" id="reg_repwd" />
+					</div>
+					
+					<div style="margin-top: 5%;">
+						<button style="margin-right: 10px;" class="btn btn-default" onclick="online_reg_ok()">确认</button>
+						<button style="margin-left: 10px;" class="btn btn-default" onclick="to_login()">返回</button>
+					</div>
+				
 				</div>
 			</div>
 		

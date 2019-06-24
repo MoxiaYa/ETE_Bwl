@@ -121,4 +121,19 @@ public class BwlCon {
 		
 	}
 	
+	@RequestMapping(value = "/addAccount" , method = RequestMethod.POST)
+	@ResponseBody
+	public String addAccount(@RequestParam("id")String id,@RequestParam("pwd")String pwd) {
+		Account account = new Account();
+		account.setId(id);
+		account.setPwd(pwd);
+		
+		boolean a = us.addAccount(account);
+		if(a) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
 }

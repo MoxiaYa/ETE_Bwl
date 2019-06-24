@@ -26,7 +26,8 @@ body {
 #local,
 #add,
 #online,
-#online_login {
+#online_login,
+#online_reg{
 	position: absolute;
 	top: 0;
 	left: 0;

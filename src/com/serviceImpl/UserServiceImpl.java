@@ -82,4 +82,20 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public boolean addAccount(Account account) {
+		int a = um.addAccount(account);
+		if(a==1) {
+			Bwl bwl = new Bwl();
+			bwl.setDetail("<h2><span style='font-weight: bold; color: rgb(77, 128, 191);'>所有能看到这句话的人</span></h2><h2><span style='font-weight: bold; color: rgb(249, 150, 59);'>都是大帅锅（大美女）！！！！</span></h2><div><span style='font-weight: bold;'>-------by 墨夏（开发者）</span></div>");
+			bwl.setTitle("初次见面！很高兴见到你ovo");
+			bwl.setOwner(account.getId());
+			bm.addBwl(bwl);
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+
 }
