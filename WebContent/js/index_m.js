@@ -15,18 +15,50 @@ function flash_local() {
 		mylist[i] = j;
 		if (k == 0) {
 			$("#local_list").html("<tr>" +
-				"<td class='list_left'>" + j.title + "</td>" +
+				"<td onclick='local_update(\""+j.id+"\")' data-transition='flip' class='list_left'>" + j.title + "</td>" +
 				"<td class='list_right'><input type='checkbox' name='local_list' value='" + j.id + "' /></td>" +
 				"</tr>").trigger('create');
 			k++;
 		} else {
 			$("#local_list").append("<tr>" +
-				"<td class='list_left'>" + j.title + "</td>" +
+				"<td onclick='local_update(\""+j.id+"\")' data-transition='flip' class='list_left'>" + j.title + "</td>" +
 				"<td class='list_right'><input type='checkbox' name='local_list' value='" + j.id + "' /></td>" +
 				"</tr>").trigger('create');
 
 		}
 	}
+}
+
+function local_update(x){
+	var a = JSON.parse(localStorage.getItem(x))
+	
+	$("#add_title").val(a.title);
+	editor2.txt.html(a.detail);
+	
+	$("#add_btn").attr("onclick","local_update_ok('"+x+"')")
+	$("#add_cancel").attr("href","#local")
+	
+	window.location.href = "#add"
+}
+
+function local_update_ok(id){
+	
+	var title = $("#add_title").val();
+	var detail = editor2.txt.html();
+	
+	data = {
+		"id": id,
+		"title": title,
+		"detail": detail
+	}
+	
+	localStorage.setItem(id, JSON.stringify(data)) //存入localStorage
+	
+	$("#add_title").val("");
+	editor2.txt.html("");
+	
+	flash_local()
+	window.location.href = "#local"
 }
 
 function local_add(){
@@ -66,6 +98,17 @@ function delete_local(){
 			}
 			flash_local()
 		}
+	}
+}
+
+function to_add(x){
+	switch(x){
+		case 'local':
+		$("#add_btn").attr("onclick","local_add()")
+		$("#add_cancel").attr("href","#local")
+		break;
+	
+		
 	}
 }
 

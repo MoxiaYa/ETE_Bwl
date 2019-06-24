@@ -108,16 +108,13 @@ if(account!=null){
 				
 				<div data-role="navbar">
 					<ul>
-						<li><a onclick="local_add()">确认</a></li>
-						<li><a href="#local" onclick="add_cancel()" data-transition="flip">取消</a></li>
+						<li><a id="add_btn">确认</a></li>
+						<li><a id="add_cancel" onclick="add_cancel()" data-transition="flip">取消</a></li>
 					</ul>
 					
 				</div>
 				
 			</div>
-			
-			
-			
 		</div>
 		
 		
