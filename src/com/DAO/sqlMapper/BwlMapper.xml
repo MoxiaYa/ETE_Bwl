@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.DAO.mapper.BwlMapper">
+	
+	<select id="getBwls" resultType="bwl" parameterType="String">
+		select * from bwl where owner = #{id}
+	</select>
+
+	<update id="updateBwl" parameterType="bwl">
+		update bwl set title = #{title},
+						detail = #{detail}
+		where id = #{id}
+	</update>
+
+	<insert id="addBwl" parameterType="bwl">
+		insert into bwl(title,detail,owner) values(#{title},#{detail},#{owner})
+	</insert>
+	
+	<delete id="deleteBwl" parameterType="java.util.List">
+		DELETE FROM bwl WHERE id IN
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+	</delete>
+
+</mapper>

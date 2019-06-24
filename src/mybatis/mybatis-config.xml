@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<!-- 这个配置使全局的映射器启用或禁用缓存 -->
+		<setting name="cacheEnabled" value="true"/>
+		
+		<setting name="useGeneratedKeys" value="true"/>
+		
+		<setting name="defaultExecutorType" value="REUSE"/>
+		
+		<setting name="lazyLoadingEnabled" value="true"/>
+		
+		<setting name="defaultStatementTimeout" value="25000"/>
+	</settings>
+	
+	<!-- 别名配置 -->
+	<typeAliases>
+		<typeAlias type="com.pojo.Account" alias="account"/>
+		<typeAlias type="com.pojo.Bwl" alias="bwl"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="com/DAO/sqlMapper/UserMapper.xml"/>
+		<mapper resource="com/DAO/sqlMapper/BwlMapper.xml"/>
+	</mappers>
+</configuration>	
