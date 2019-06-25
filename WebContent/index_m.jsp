@@ -27,9 +27,16 @@ boolean islogin = false;
 if(account!=null){
 	islogin=true;
 }
+
 %>
 
-
+<c:if test="<%=islogin %>">
+		<script>
+			$(window).ready(function(){
+				login_ok()
+			})
+		</script>
+</c:if>
 
 	</head>
 	<body>
@@ -40,15 +47,63 @@ if(account!=null){
 					<label>欢迎使用ETE备忘录</label>
 					<label>请先选择模式</label>
 					<a href="#local" data-role="button" data-transition="flip" onclick="flash_local()">本地模式</a>
-					<a href="" data-role="button">网络模式</a>
+					<a id="to_online" href="#online_login" data-role="button" data-transition="flip">网络模式</a>
 				</div>
 			</div>
 		</div>
 		
+		<div id="online_login" data-role="page">
+			<div data-role="content" id="login_content" class="content">
+				<div id="login_main">
+					<div style="margin-top: 20%;">
+						<label style="color: white;">账号</label>
+						<input id="login_id" type="text" />
+						<label style="color: white;">密码</label>
+						<input id="login_pwd" type="password" />
+					</div>
+					<div data-role="navbar" style="margin-top: 10%;">
+						<ul>
+							<li><a href="#index" data-transition="flip">返回</a></li>
+							<li><a data-transition="flip" onclick="online_login()">确认</a></li>
+							<li><a>去注册</a></li>
+						</ul>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 		
+		<div id="online" data-role="page">
+			
+			<div data-role="content" id="online_content" class="content">
+				<div id="online_main">
+					
+					<div id="online_have">
+						<table class="table">
+							
+							<tbody id="online_list">
+								<tr>
+									
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+					<div data-role="navbar">
+						<ul>
+							<li><a href="#index" data-transition="flip">返回</a></li>
+							<li><a href="#add" data-transition="flip">添加</a></li>
+							<li><a onclick="delete_online()">删除</a></li>
+						</ul>
+						
+					</div>
+				</div>
+			</div>
+			
+		</div>
 		
 		<div id="local" data-role="page">
-			<div data-role="content" id="index_content" class="content">
+			<div data-role="content" id="local_content" class="content">
 				<div id="local_main">
 					
 					<div id="local_have">

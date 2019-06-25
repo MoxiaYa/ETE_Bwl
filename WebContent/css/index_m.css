@@ -1,5 +1,5 @@
 html,
-body,#index,#local,#add {
+body,#index,#local,#add,#online,#online_login {
 	height: 100%;
 	width: 100%;
 }
@@ -48,7 +48,7 @@ input{
 	width: 30%;
 }
 
-#local_main{
+#local_main,#online_main{
 	height: 100%;
 }
 
@@ -63,7 +63,7 @@ table input[type=checkbox]{
 	z-index: 1; */
 }
 
-#local_have{
+#local_have,#online_have{
 	width: 100%;
 	background-color: white;
 	margin-top: 10px;
