@@ -1,5 +1,8 @@
 var mylist = [] //本地备忘录列表
-var islogin = false;
+var online_books = {};//网络备忘录列表
+
+var islogin = false;//是否登录
+
 $(window).ready(function() {
 	flash_local();
 })
@@ -54,24 +57,22 @@ function flash_online(){
 
 //刷新，请求获取数据
 function update_online(){
+	$.ajaxSetup({async:false});
 	$.getJSON("bwl/getBwl.do",function(data,status){
 		if(status=="success"){
 			if(data['no']=="no"){
 				alert("未登录或登录已过期！请登录重试")
-				
 			}else{
-				
 				online_books = data;
-				
-				
 			}
 		}else{
 			alert("刷新失败！服务器异常！")
 		}
 	})
+	$.ajaxSetup({async:true});
 }
 
-var online_books = {};
+
 
 function login_ok(){
 	islogin = true;
@@ -82,7 +83,79 @@ function login_ok(){
 }
 
 function online_update(id){
+	var a = online_books[id]
 	
+	$("#add_title").val(a.title);
+	editor2.txt.html(a.detail);
+	
+	$("#add_btn").attr("onclick","online_update_ok('"+id+"')")
+	$("#add_cancel").attr("href","#online")
+	
+	window.location.href = "#add"
+}
+
+function online_update_ok(id){
+	//alert(id)
+	var title = $("#add_title").val();
+	var detail = editor2.txt.html();
+	
+	datas = {
+		"id": id,
+		"title": title,
+		"detail": detail
+	}
+	
+	$.post("bwl/updateBwl.do",datas,function(data,status){
+		if(status=="success"){
+			if(data=="true"){
+				alert("修改成功");
+				// online_add_btn('cancel');
+				// update_online();
+				$("#add_cancel").click();
+				update_online()
+				flash_online()
+			}else if(data=="nologin"){
+				alert("修改失败！您的登录已过期，请重新登录！")
+			}else{
+				alert("修改失败！未知错误")
+			}
+		}else{
+			alert("修改失败！服务器异常")
+		}
+	})
+}
+
+function update_and_flash(){
+	update_online()
+	flash_online()
+}
+
+function delete_online(){
+	var b = []
+	$("input[name='online_list']:checked").each(function(i){
+		b.push($(this).val())
+	})
+	if(b==[]||b==null||b==""){
+		alert("请先选择！")
+	}else{
+		var a = confirm("确认要删除吗？")
+		if(a){
+			$.post("bwl/deleteBwl.do",{"ids":b.toString()},function(data,status){
+				console.log(data)
+				if(status=="success"){
+					if(data=="true"){
+						//删除成功
+						update_online()
+						flash_online()
+					}else{
+						alert("删除失败！登录已过期，请重新登录！")
+					}
+				}else{
+					alert("删除失败！服务器异常")
+				}
+			})
+		}
+	}
 }
 
 function online_login(){
@@ -141,6 +214,16 @@ function local_update(x){
 	window.location.href = "#add"
 }
 
+function local_to_add(){
+	$("#add_btn").attr("onclick","local_add()")
+	$("#add_cancel").attr("href","#local")
+}
+
+function online_to_add(){
+	$("#add_btn").attr("onclick","online_add()")
+	$("#add_cancel").attr("href","#online")
+}
+
 function local_update_ok(id){
 	
 	var title = $("#add_title").val();
@@ -183,6 +266,33 @@ function local_add(){
 	window.location.href = "#local"
 }
 
+function online_add(){
+	var title = $("#add_title").val();
+	var detail = editor2.txt.html();
+	var datas = {
+		 "title":title,
+		 "detail":detail
+	 }
+	 $.post("bwl/addBwl.do",datas,function(data,status){
+	 	if(status=="success"){
+	 		if(data=="true"){
+	 			alert("添加成功")
+				update_online()
+				//flash_online()
+	 			$("#add_cancel").click();
+	 			flash_online()
+				
+	 		}else if(data=="nologin"){
+	 			alert("添加失败！您的登录已过期，请重新登录！")
+	 		}else{
+	 			alert("添加失败！未知错误")
+	 		}
+	 	}else{
+	 		alert("添加失败！服务器异常")
+	 	}
+	 })
+}
+
 function delete_local(){
 	var b = []
 	$("input[name='local_list']:checked").each(function(i){
@@ -201,20 +311,7 @@ function delete_local(){
 	}
 }
 
-function delete_online(){
-	
-}
 
-function to_add(x){
-	switch(x){
-		case 'local':
-		$("#add_btn").attr("onclick","local_add()")
-		$("#add_cancel").attr("href","#local")
-		break;
-	
-		
-	}
-}
 
 function add_cancel(){
 	$("#add_title").val("");

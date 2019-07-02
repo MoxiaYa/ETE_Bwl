@@ -417,7 +417,6 @@ function online_add_ok(){
 		 "title":title,
 		 "detail":detail
 	 }
-	 console.log(datas)
 	$.post("bwl/addBwl.do",datas,function(data,status){
 		if(status=="success"){
 			if(data=="true"){

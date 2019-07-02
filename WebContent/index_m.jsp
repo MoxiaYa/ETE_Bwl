@@ -92,8 +92,9 @@ if(account!=null){
 					<div data-role="navbar">
 						<ul>
 							<li><a href="#index" data-transition="flip">返回</a></li>
-							<li><a href="#add" data-transition="flip">添加</a></li>
+							<li><a href="#add" onclick="online_to_add()" data-transition="flip">添加</a></li>
 							<li><a onclick="delete_online()">删除</a></li>
+							<li><a onclick="update_and_flash()">刷新</a></li>
 						</ul>
 						
 					</div>
@@ -120,7 +121,7 @@ if(account!=null){
 					<div data-role="navbar">
 						<ul>
 							<li><a href="#index" data-transition="flip">返回</a></li>
-							<li><a href="#add" data-transition="flip">添加</a></li>
+							<li><a href="#add" data-transition="flip" onclick="local_to_add()">添加</a></li>
 							<li><a onclick="delete_local()">删除</a></li>
 						</ul>
 						
